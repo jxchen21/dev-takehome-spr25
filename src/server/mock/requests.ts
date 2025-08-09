@@ -22,7 +22,7 @@ import {
 export function getMockItemRequests(
   status: string | null,
   page: number
-): MockItemRequest[] {
+): { data: MockItemRequest[]; totalPages: number; totalRecords: number } {
   const sortedRequests = sortMockItemRequests(mockItemRequests);
   let filteredRequests = sortedRequests;
   if (status && isValidMockStatus(status)) {
@@ -32,7 +32,7 @@ export function getMockItemRequests(
     filteredRequests,
     page,
     PAGINATION_PAGE_SIZE
-  ).data;
+  );
   return paginatedRequests;
 }
 
