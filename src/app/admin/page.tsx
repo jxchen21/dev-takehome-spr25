@@ -2,8 +2,8 @@
 
 import Button from "@/components/atoms/Button";
 import Input from "@/components/atoms/Input";
+import Dropdown from "@/components/atoms/Dropdown";
 import { useState } from "react";
-
 /**
  * Legacy front-end code from Crisis Corner's previous admin page!
  */
@@ -43,6 +43,7 @@ export default function ItemRequestsPage() {
         ) : (
           "None :("
         )}
+        <Dropdown options={["Completed", "Pending", "Approved", "Rejected"]} />
       </div>
     </div>
   );
