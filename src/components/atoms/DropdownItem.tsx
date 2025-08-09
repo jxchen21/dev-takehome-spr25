@@ -1,23 +1,22 @@
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faCircle } from "@fortawesome/free-solid-svg-icons";
 interface DropdownItemProps {
     value: string;
-    colors: string[];
     className?: string;
+    indicator: string
 }
 export default function DropdownItem({
     value,
-    colors,
-    className = ""
+    className = "",
+    indicator
     } : DropdownItemProps) {
-        console.log(colors[1]);
         return(
             <p
-                className={`px-1 rounded-lg w-[75%] bg-[var(--bg)] text-[var(--fg)] ${className}`}
-                style={{
-                    '--bg': colors[0],
-                    '--fg': colors[1]
-                } as React.CSSProperties}
+                className={`flex flex-row items-center text-left text-sm px-1 rounded-lg w-[75%]
+                    ${className}`}
             >
-                • {value}
+                <FontAwesomeIcon icon={faCircle} className={`ml-1 mr-2 w-1 h-1 ${indicator} mr-1`} />
+                {value}
             </p>
         );
 }

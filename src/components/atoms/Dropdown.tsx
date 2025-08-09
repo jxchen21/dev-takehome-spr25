@@ -2,22 +2,25 @@ import React from "react";
 import {useState, useRef, useEffect} from "react";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faChevronDown} from '@fortawesome/free-solid-svg-icons';
+import {faChevronUp} from '@fortawesome/free-solid-svg-icons';
 import DropdownItem from "./DropdownItem";
 
 interface DropdownProps {
     options: string[];
+    value?: string;
 }
-const colorMaps: {[key: string]: string[]} = {
-    Completed: ['#ECFDF3','#14BA6D'],
-    Pending: ['#FFDAC3', '#A43E00'],
-    Approved: ['#FFEBC8', '#7B5F2E'],
-    Rejected: ['#FFD2D2', '#8D0402']
-}
+const colorMaps: {[key: string]: { text: string; fill: string; indicator: string }} = {
+  Completed: { text: "text-success-text", fill: "bg-success-fill", indicator: "text-success-indicator" },
+  Pending: { text: "text-negative-text", fill: "bg-negative-fill", indicator: "text-negative-indicator" },
+  Approved: { text: "text-warning-text", fill: "bg-warning-fill", indicator: "text-warning-indicator" },
+  Rejected: { text: "text-danger-text", fill: "bg-danger-fill", indicator: "text-danger-indicator" }
+};
 export default function Dropdown({
-    options
+    options,
+    value = ""
 }: DropdownProps) {
     const [open, setOpen] = useState(false);
-    const [selected, setSelected] = useState("");
+    const [selected, setSelected] = useState(value);
     const dropdownRef = useRef<HTMLDivElement>(null);
 
     useEffect(() => {
@@ -41,21 +44,29 @@ export default function Dropdown({
     }
 
     return(
-        <div ref={dropdownRef}>
-            <button className={`relative flex flex-row items-center w-[75%] p-2 border hover:bg-blue-100 transition-colors duration-300 ease-in-out
+        <div ref={dropdownRef} className="relative flex flex-col items-center">
+            <button className={`relative flex flex-row items-center min-w-fit w-[75%] text-sm p-2 border hover:bg-blue-100 transition-colors duration-300 ease-in-out
                 ${open ? "border-blue-500" : "border-gray"} rounded-md`} onClick={toggleOpen}>
                 {
-                    selected === "" ? "Select" : <DropdownItem className="text-left" value={selected} colors={colorMaps[selected]} />
+                    selected === "" ? "Select" : <DropdownItem value={selected}
+                                        className={`${colorMaps[selected].text}
+                                        ${colorMaps[selected].fill}`}
+                                        indicator={`${colorMaps[selected].indicator}`} />
                 }
-                <FontAwesomeIcon className="absolute right-[10%] w-4 h-4" icon={faChevronDown} />
+                <FontAwesomeIcon className="absolute right-[10%] w-4 h-4" icon={open ? faChevronUp : faChevronDown} />
             </button>
 
             {
                 open && (
-                    <ul  className="w-[75%] shadow-md shadow-gray">
+                    <ul  className="absolute top-full w-[75%] shadow-md bg-white shadow-gray z-10">
                         {
                             options.map((option) =>
-                                <li key={option} className="w-[100%] p-2 hover:bg-gray-100" onClick={() => setSelection(option)}><DropdownItem value={option} colors={colorMaps[option]} /></li>
+                                <li key={option} className="w-[100%] p-2 hover:bg-gray-100" onClick={() => setSelection(option)}>
+                                    <DropdownItem value={option}
+                                        className={`${colorMaps[option].text}
+                                        ${colorMaps[option].fill}`}
+                                        indicator={`${colorMaps[option].indicator}`} />
+                                </li>
                             )
                         }
                     </ul>
