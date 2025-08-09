@@ -45,23 +45,23 @@ export default function Dropdown({
 
     return(
         <div ref={dropdownRef} className="relative flex flex-col items-center">
-            <button className={`relative flex flex-row items-center min-w-fit w-[75%] text-sm p-2 border hover:bg-blue-100 transition-colors duration-300 ease-in-out
-                ${open ? "border-blue-500" : "border-gray"} rounded-md`} onClick={toggleOpen}>
+            <button className={`relative flex flex-row justify-between items-center min-w-fit w-full text-sm p-2 border hover:bg-primary-fill transition-colors duration-300 ease-in-out
+                ${open ? "border-primary" : "border-gray"} rounded-md`} onClick={toggleOpen}>
                 {
                     selected === "" ? "Select" : <DropdownItem value={selected}
                                         className={`${colorMaps[selected].text}
                                         ${colorMaps[selected].fill}`}
                                         indicator={`${colorMaps[selected].indicator}`} />
                 }
-                <FontAwesomeIcon className="absolute right-[10%] w-4 h-4" icon={open ? faChevronUp : faChevronDown} />
+                <FontAwesomeIcon className="w-4 h-4" icon={open ? faChevronUp : faChevronDown} />
             </button>
 
             {
                 open && (
-                    <ul  className="absolute top-full w-[75%] shadow-md bg-white shadow-gray z-10">
+                    <ul  className="absolute top-full w-full shadow-md bg-white shadow-gray z-10">
                         {
                             options.map((option) =>
-                                <li key={option} className="w-[100%] p-2 hover:bg-gray-100" onClick={() => setSelection(option)}>
+                                <li key={option} className="p-2 hover:bg-gray-fill transition-colors duration-300 ease-in-out" onClick={() => setSelection(option)}>
                                     <DropdownItem value={option}
                                         className={`${colorMaps[option].text}
                                         ${colorMaps[option].fill}`}

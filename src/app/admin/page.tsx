@@ -49,8 +49,7 @@ export default function ItemRequestsPage() {
 
       </div>
         <Table columns={["Name", "Item Requested", "Created", "Updated", "Status"]}
-          tabs={["All", "Pending", "Approved", "Completed", "Rejected"]}
-          data={[]} />
+          tabs={["All", "Pending", "Approved", "Completed", "Rejected"]} />
     </div>
   );
 }
